@@ -1,6 +1,4 @@
 #include "serializabledataobject.h"
-#include "group.h"
-#include "day.h"
 
 int SerializableDataObject::idc = 0;
 
@@ -199,14 +197,14 @@ QVariant SerializableDataObject::createListFromValueAndContentType(const QJsonAr
 
         QVariant var((QVariant::Type)listType);
         QVariant convar;
-        convar.setValue(new Day(this));
-        var.toList().push_back(convar);
-        //var.setValue(resultList);
-        bool d = var.canConvert(listType);
-        bool e = var.canConvert(QMetaType::type("QList<QObject*>"));
-        bool f = var.canConvert(QMetaType::type("QList<SerializableDataObject*>"));
-        bool g = var.canConvert(QMetaType::type("QList<QVariant>"));
-        bool h = var.canConvert(QMetaType::type("QList<Day*>"));
+        //convar.setValue(new Day(this));
+        //var.toList().push_back(convar);
+        var.setValue(resultList);
+        //bool d = var.canConvert(listType);
+        //bool e = var.canConvert(QMetaType::type("QList<QObject*>"));
+        //bool f = var.canConvert(QMetaType::type("QList<SerializableDataObject*>"));
+        //bool g = var.canConvert(QMetaType::type("QList<QVariant>"));
+        //bool h = var.canConvert(QMetaType::type("QList<Day*>"));
         var.convert(listType);
         return var;
     }else{
