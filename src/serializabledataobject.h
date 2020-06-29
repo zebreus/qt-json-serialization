@@ -11,8 +11,6 @@ class SerializableDataObject;
 #include <QMetaType>
 #include <QDebug>
 #include <QList>
-//#include "semester.h"
-//#include "group.h"
 
 class SerializableDataObject : public QObject
 {
@@ -57,7 +55,6 @@ protected:
     template<class T>
     QList<T*> fromObjectJsonArray(const QJsonValue& content);
 
-    //QList<SerializableDataObject *> fromObjectJsonArray(const QJsonArray& content, const QString& name);
     //setzt property, falls sie vorhanden ist
     bool setPropertyValue(const QJsonValue& value, const QString& propertyName);
     QMetaType::Type getTypeFromList(const QMetaType::Type& type) const;

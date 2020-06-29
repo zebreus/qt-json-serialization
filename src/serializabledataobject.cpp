@@ -197,14 +197,7 @@ QVariant SerializableDataObject::createListFromValueAndContentType(const QJsonAr
 
         QVariant var((QVariant::Type)listType);
         QVariant convar;
-        //convar.setValue(new Day(this));
-        //var.toList().push_back(convar);
         var.setValue(resultList);
-        //bool d = var.canConvert(listType);
-        //bool e = var.canConvert(QMetaType::type("QList<QObject*>"));
-        //bool f = var.canConvert(QMetaType::type("QList<SerializableDataObject*>"));
-        //bool g = var.canConvert(QMetaType::type("QList<QVariant>"));
-        //bool h = var.canConvert(QMetaType::type("QList<Day*>"));
         var.convert(listType);
         return var;
     }else{
@@ -224,27 +217,3 @@ int SerializableDataObject::getId()
 SerializableDataObject::SerializableDataObject(QObject *parent, int id) : QObject(parent), id(id)
 {
 }
-
-/*
-QList<SerializableDataObject *> SerializableDataObject::fromObjectJsonArray(const QJsonArray& content, const QString& name)
-{
-    auto metaObject = this->metaObject();
-    const char* keyChars = name.toStdString().c_str();
-    //Find index of property
-    int propIndex = metaObject->indexOfProperty(keyChars);
-    QMetaProperty mp = metaObject->property(propIndex);
-    QString typen = mp.name();
-    const char* typeChars = typen.toStdString().c_str();
-    int metaTypeId1 = QMetaType::type(typeChars);
-    int metaTypeId2 = QMetaType::type("Semester");
-    int metaTypeId3 = QMetaType::type("Semester*");
-    const QMetaObject* mo3 = QMetaType::metaObjectForType(metaTypeId3);
-    const SerializableDataObject* sdo3 = (SerializableDataObject*)mo3->newInstance(Q_ARG(QObject*, this));
-    const SerializableDataObject* sdo4 = (SerializableDataObject*)mo3->newInstance();
-    //  const SerializableDataObject* sdo3 = mo3->newInstance(Q_ARG(QMetaType::QObjectStar, this),Q_ARG(QMetaType::Int,45));
-    auto myClassPtr = (SerializableDataObject*)QMetaType::create(metaTypeId3);
-
-    QList<SerializableDataObject *> resultList;
-    return resultList;
-}
-*/
