@@ -1,4 +1,4 @@
-#include "serializabledataobject.h"
+#include <serializabledataobject.h>
 
 int SerializableDataObject::idc = 0;
 

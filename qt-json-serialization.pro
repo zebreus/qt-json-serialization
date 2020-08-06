@@ -1,3 +1,5 @@
+INCLUDEPATH += $$PWD/include
+
 QT -= gui
 
 TEMPLATE = lib
@@ -20,7 +22,7 @@ SOURCES += \
     src/serializabledataobject.cpp
 
 HEADERS += \
-    src/serializabledataobject.h
+    include/serializabledataobject.h
 
 # Default rules for deployment.
 unix {
