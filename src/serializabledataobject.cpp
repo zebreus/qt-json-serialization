@@ -122,10 +122,12 @@ bool SerializableDataObject::setPropertyValue(const QJsonValue &value, const QSt
     if ( propertyIndex < 0 ){
         return false;
     }
+    
+    //TODO remove if really unneeded
+    //QMetaProperty property = metaObject->property(propertyIndex);
+    //QMetaType::Type propertyType = (QMetaType::Type) property.type();
 
-    QMetaProperty property = metaObject->property(propertyIndex);
     //TODO QVariant::Type not completly equal to QMetaType::Type. Check the differences and account for them later
-    QMetaType::Type propertyType = (QMetaType::Type) property.type();
     QJsonValue::Type jsonType = value.type();
 
     switch(jsonType){
@@ -175,9 +177,6 @@ QVariant SerializableDataObject::createListFromValueAndContentType(const QJsonAr
     if(contentType == QMetaType::UnknownType){
         return QList<QVariant>();
     }
-
-    const char* a = QMetaType::typeName(listType);
-    const char* b = QMetaType::typeName(contentType);
 
     QMetaType::TypeFlags flags = QMetaType::typeFlags(contentType);
     if((flags & QMetaType::PointerToQObject) != 0){
