@@ -6,7 +6,8 @@ void SerializableDataObject::simpleValuesFromJsonObject(const QJsonObject &conte
 {
     auto metaObject = this->metaObject();
     for(QString key: content.keys()){
-        const char* keyChars = key.toStdString().c_str();
+        std::string keyString = key.toStdString();
+        const char* keyChars = keyString.c_str();
         //Find index of property
         int propIndex = metaObject->indexOfProperty(keyChars);
         if ( propIndex < 0 ){
@@ -115,7 +116,8 @@ QJsonArray SerializableDataObject::toIdJsonArray(const QList<SerializableDataObj
 bool SerializableDataObject::setPropertyValue(const QJsonValue &value, const QString &propertyName)
 {
     auto metaObject = this->metaObject();
-    const char* propertyNameChars = propertyName.toStdString().c_str();
+    std::string propertyNameString = propertyName.toStdString();
+    const char* propertyNameChars = propertyNameString.c_str();
     int propertyIndex = metaObject->indexOfProperty(propertyNameChars);
 
     //Return false if property does not exist
@@ -135,6 +137,7 @@ bool SerializableDataObject::setPropertyValue(const QJsonValue &value, const QSt
     case QJsonValue::Bool:
     case QJsonValue::Double:
     case QJsonValue::String:
+        //qDebug() << "Setting " << propertyNameChars << " to " << value.toVariant() << " (" << value.toVariant().typeName() << ")";
         return this->setProperty(propertyNameChars, value.toVariant());
         break;
     case QJsonValue::Object:
