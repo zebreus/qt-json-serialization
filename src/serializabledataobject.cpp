@@ -1,7 +1,5 @@
 #include <serializabledataobject.h>
 
-int SerializableDataObject::idc = 0;
-
 void SerializableDataObject::simpleValuesFromJsonObject(
     const QJsonObject &content) {
   auto metaObject = this->metaObject();
@@ -108,10 +106,7 @@ QJsonArray SerializableDataObject::toIdJsonArray(
     const QList<SerializableDataObject *> &list) const {
   QJsonArray activeGroupArray;
   for (SerializableDataObject *sdo : list) {
-    activeGroupArray.push_back(sdo->id);
-    if (sdo->id == 4) {
-      qDebug() << "test";
-    }
+    activeGroupArray.push_back(sdo->id.toString());
   }
   return activeGroupArray;
 }
@@ -216,7 +211,7 @@ QVariant SerializableDataObject::createListFromValueAndContentType(
   return QList<QVariant>();
 }
 
-int SerializableDataObject::getId() { return id; }
+QUuid SerializableDataObject::getId() { return id; }
 
-SerializableDataObject::SerializableDataObject(QObject *parent, int id)
+SerializableDataObject::SerializableDataObject(QObject *parent, QUuid id)
     : QObject(parent), id(id) {}

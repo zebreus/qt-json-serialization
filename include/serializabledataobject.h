@@ -11,15 +11,17 @@ class SerializableDataObject;
 #include <QMetaProperty>
 #include <QMetaType>
 #include <QObject>
+#include <QUuid>
 
 class SerializableDataObject : public QObject {
   Q_OBJECT
-  Q_PROPERTY(int id READ getId)
+  Q_PROPERTY(QUuid id READ getId)
 public:
   virtual void fromJsonObject(const QJsonObject &content) = 0;
   virtual QJsonObject toJsonObject() const = 0;
-  int getId();
-  explicit SerializableDataObject(QObject *parent = nullptr, int id = idc++);
+  QUuid getId();
+  explicit SerializableDataObject(QObject *parent = nullptr,
+                                  QUuid id = QUuid::createUuid());
 
 protected:
   /** Reads all strings, numbers and booleans from QJsonObject into this
@@ -93,8 +95,7 @@ protected:
   QList<T *> fromIdJsonArray(const QJsonValue &content,
                              const QList<T *> &objects);
 
-  static int idc;
-  int id;
+  QUuid id;
 };
 
 template <class T>
@@ -104,7 +105,7 @@ SerializableDataObject::fromObjectJsonArray(const QJsonArray &content) {
 
   for (QJsonValue jsonObjectValue : content) {
     QJsonObject jsonObject = jsonObjectValue.toObject();
-    int id = jsonObject.value("id").toInt();
+    QUuid id = jsonObject.value("id").toString();
     T *sdoPointer = new T(this, id);
     sdoPointer->fromJsonObject(jsonObject);
     resultList.append(sdoPointer);
@@ -124,7 +125,7 @@ QList<T *> SerializableDataObject::fromIdJsonArray(const QJsonArray &content,
   QList<T *> resultList;
 
   for (QJsonValue contentId : content) {
-    int contentIdInt = contentId.toInt();
+    QUuid contentIdInt = contentId.toString();
 
     // Find the object with matching id and add reference to modules
     for (T *sdoPointer : objects) {
